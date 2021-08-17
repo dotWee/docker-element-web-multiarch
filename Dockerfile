@@ -1,9 +1,11 @@
 FROM nginx:alpine
 
-MAINTAINER Julio Gutierrez <bubuntux@gmail.com>
+LABEL maintainer="Lukas Wolfsteiner <lukas@wolfsteiner.media>"
+LABEL org.opencontainers.image.source="https://github.com/dotWee/docker-element-web-multiarch"
 
 ARG version
 ARG GPG_KEY=2BAA9B8552BD9047
+
 RUN if [ -z "$version" ]; then echo >&2 "error: build argument 'version' is required" && exit 1; fi &&\
     apk add --no-cache --virtual .build-deps curl gnupg &&\
     curl -sSL https://github.com/vector-im/element-web/releases/download/${version}/element-${version}.tar.gz -o element-web.tar.gz &&\

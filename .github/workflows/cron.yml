@@ -19,7 +19,7 @@ jobs:
         run: |
           element_version=`curl -SsL https://api.github.com/repos/vector-im/element-web/releases | jq -r '.[].tag_name' | head -n 1`
           echo "::set-output name=version::${element_version}"
-          docker_version=`curl -sSL 'https://registry.hub.docker.com/v2/repositories/bubuntux/element-web/tags' | jq -r '."results"[]["name"] | select(.=="'${element_version}'")'`
+          docker_version=`curl -sSL 'https://registry.hub.docker.com/v2/repositories/dotWee/docker-element-web-multiarch/tags' | jq -r '."results"[]["name"] | select(.=="'${element_version}'")'`
           if [ "${element_version}" == "${docker_version}" ]; then
             echo "::set-output name=new::false"
           else
@@ -45,15 +45,15 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+          username: ${{ secrets.GH_REGISTRY_USERNAME }}
+          password: ${{ secrets.GH_REGISTRY_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
@@ -62,9 +62,8 @@ jobs:
           build-args: version=${{ needs.validate.outputs.version }}
           push: true
           tags: |
-            bubuntux/riot-web:${{ needs.validate.outputs.version }}
-            ${{ github.repository }}:${{ needs.validate.outputs.version }}
-            ghcr.io/${{ github.repository }}:${{ needs.validate.outputs.version }}
+            dotwee/element-web-multiarch:${{ needs.validate.outputs.version }}
+            ghcr.io/dotwee/element-web-multiarch:${{ needs.validate.outputs.version }}
 
       - name: Push latest
         if: ${{ !contains( needs.validate.outputs.version , 'rc') }}
@@ -74,13 +73,12 @@ jobs:
           build-args: version=${{ needs.validate.outputs.version }}
           push: true
           tags: |
-            bubuntux/riot-web:latest
-            ${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:latest
+            dotwee/element-web-multiarch:latest
+            ghcr.io/dotwee/element-web-multiarch:latest
 
       - name: Update repo description
         uses: peter-evans/dockerhub-description@v2
         with:
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: ${{ github.repository }}
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+          repository: dotwee/element-web-multiarch
