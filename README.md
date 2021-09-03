@@ -14,6 +14,15 @@ This project is on charge of checking everyday if there is a new [Element](https
 [Element](https://element.io/features) (formerly known as Vector/Riot) is a web client for [Matrix](https://matrix.org) an open network for secure, decentralized communication.
 
 # How to use the docker image #
+
+## Pull the image ##
+
+From GitHub Package Repository: `docker pull ghcr.io/dotwee/element-web-multiarch:latest`
+
+From Docker Hub Registry: `docker pull dotwee/element-web-multiarch:latest`
+
+## Run the image ##
+
 ```
 $ docker run --name element -p 8080:80 -d ghcr.io/dotwee/element-web-multiarch
 ```
