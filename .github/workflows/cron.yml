@@ -20,7 +20,8 @@ jobs:
         run: |
           element_version=`curl -SsL https://api.github.com/repos/vector-im/element-web/releases | jq -r '.[].tag_name' | head -n 1`
           echo "::set-output name=version::${element_version}"
-          docker_version=`curl -sSL 'https://registry.hub.docker.com/v2/repositories/dotWee/docker-element-web/tags' | jq -r '."results"[]["name"] | select(.=="'${element_version}'")'`
+
+          docker_version=`curl -sSL 'https://registry.hub.docker.com/v2/repositories/dotwee/element-web/tags' | jq -r '."results"[]["name"] | select(.=="'${element_version}'")'`
           if [ "${element_version}" == "${docker_version}" ]; then
             echo "::set-output name=new::false"
           else
@@ -62,19 +63,11 @@ jobs:
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           build-args: version=${{ needs.validate.outputs.version }}
           push: true
+          context: .
           tags: |
             dotwee/element-web:${{ needs.validate.outputs.version }}
-            ghcr.io/dotwee/element-web:${{ needs.validate.outputs.version }}
-
-      - name: Push latest
-        if: ${{ !contains( needs.validate.outputs.version , 'rc') }}
-        uses: docker/build-push-action@v2
-        with:
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
-          build-args: version=${{ needs.validate.outputs.version }}
-          push: true
-          tags: |
             dotwee/element-web:latest
+            ghcr.io/dotwee/element-web:${{ needs.validate.outputs.version }}
             ghcr.io/dotwee/element-web:latest
 
       - name: Update repo description
