@@ -54,7 +54,7 @@ jobs:
           push: true
           build-args: version=${{ steps.tag_name.outputs.SOURCE_TAG }}
           tags: |
-            dotwee/element-web-multiarch:${{ steps.tag_name.outputs.SOURCE_TAG }}
-            dotwee/element-web-multiarch:latest
-          #  ghcr.io/dotwee/element-web-multiarch:${{ steps.tag_name.outputs.SOURCE_TAG }}
-          #  ghcr.io/dotwee/element-web-multiarch:latest
+            dotwee/element-web:${{ steps.tag_name.outputs.SOURCE_TAG }}
+            dotwee/element-web:latest
+          #  ghcr.io/dotwee/element-web:${{ steps.tag_name.outputs.SOURCE_TAG }}
+          #  ghcr.io/dotwee/element-web:latest

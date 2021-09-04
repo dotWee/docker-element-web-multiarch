@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 LABEL maintainer="Lukas Wolfsteiner <lukas@wolfsteiner.media>"
-LABEL org.opencontainers.image.source="https://github.com/dotWee/docker-element-web-multiarch"
+LABEL org.opencontainers.image.source="https://github.com/dotWee/docker-element-web"
 
 ARG version
 ARG GPG_KEY=2BAA9B8552BD9047
