@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM nginx:alpine
 
 LABEL maintainer="Lukas Wolfsteiner <lukas@wolfsteiner.media>"
