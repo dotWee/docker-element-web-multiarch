@@ -14,7 +14,7 @@ This project is on charge of checking everyday if there is a new [Element](https
 
 _What makes this docker image different from the original ([`vectorim/element-web`](https://hub.docker.com/r/vectorim/element-web))?_
 
-> This image includes nginx with support for pretty much every common cpu arch:
+This image includes nginx with support for pretty much every common cpu arch:
 
 > - `linux/386`
 > - `linux/amd64`
