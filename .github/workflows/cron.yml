@@ -88,3 +88,5 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
           repository: dotwee/element-web
+          short-description: ${{ github.event.repository.description }}
+          
